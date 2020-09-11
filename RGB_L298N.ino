@@ -2,26 +2,41 @@
 #define LED_R 10
 #define LED_B 9
 
+int rold;
 
 void setup ()  {
     pinMode(LED_R, OUTPUT);
     pinMode(LED_G, OUTPUT);
     pinMode(LED_B, OUTPUT);
+    rold = 1;
     }
 
 
 void loop ()  {
-    dimmer();
-    tidi();
-    cc();
-    consdi();
+    int r = random(1,5);
+    if (r == rold) r = random(1,5);
+    switch (r) {
+        case 1:
+            cc();
+            break;
+        case 2:
+            consdi();
+            break;
+        case 3:
+            tidi();
+            break;
+        case 4:
+            dimmer();
+            break;
+        }
+    rold = r;
     }
 
 
 // Colors and light
 void light(int s){
     red(s * 0.4);
-    green(s);
+    green(s * 1);
     blue(s * 0.4);
     }
 void red(int s){
@@ -37,41 +52,48 @@ void blue(int s){
 
 // Constant color (1.000 sec)
 void cc() {
-    light(255 * 0.8);
-    delay(1000);
+    light(255 * 0.7);
+    delay(240000);
     }
+
 
 
 // 60-50-70 (1.520 sec)
 void consdi(){
-    light(255 * 0.6);
-    delay(800);
-    light(255 * 0.7);
-    delay(80);
-    light(255 * 0.5);
-    delay(100);
-    light(255 * 0.7);
-    delay(80);
-    light(255 * 0.5);
-    delay(100);
-    light(255 * 0.7);
-    delay(80);
-    light(255 * 0.5);
-    delay(100);
-    light(255 * 0.7);
-    delay(80);
-    light(255 * 0.5);
-    delay(100);
+    for (int i = 0; i < 3 ; i = i + 1){
+        light(255 * 0.5);
+        delay(800);
+        light(255 * 0.6);
+        delay(80);
+        light(255 * 0.5);
+        delay(100);
+        light(255 * 0.7);
+        delay(80);
+        light(255 * 0.5);
+        delay(100);
+        light(255 * 0.7);
+        delay(80);
+        light(255 * 0.5);
+        delay(100);
+        light(255 * 0.7);
+        delay(80);
+        light(255 * 0.5);
+        delay(100);
+        light(255 * 0.7);
+        delay(30000);
+        }
     }
 
 
 // dimmer (8.280 sec)
 void dimmer(){
-    int x = 1;
-    for (int i = 15; i > 14; i = i + x){
-        light(i);
-        if (i == 255) x = -1;
-        delay(18);
+    for (int j = 0; j < 42; j = j + 1){
+        int x = 1;
+        for (int i = 15; i > 14; i = i + x){
+            light(i);
+            if (i == 255) x = -1;
+            delay(18);
+            }
         }
     }
 
