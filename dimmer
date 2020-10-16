@@ -5,6 +5,7 @@
 dimmerLamp dimmer(outputPin); //initialase port for dimmer for MEGA, Leonardo, UNO, Arduino M0, Arduino Zero
 int outVal = 0;
 int buttonRed = 0;
+int rold;
 
 void setup() {
   USE_SERIAL.begin(9600); 
@@ -12,14 +13,33 @@ void setup() {
   USE_SERIAL.println("Dimmer Program is starting...");
   USE_SERIAL.println("Set value");
   pinMode(13, INPUT);
+  rold = 1;
 }
 
 
 void loop() {
-  light();
-  dimmer.setPower(30);
-  delay(3000);
-
+int r = random(1,7);
+    if (r == rold) r = random(1,7);
+    switch (r) {
+        case 1:
+            dimmers();
+            break;
+        case 2:
+            boom();
+            break;
+        case 3:
+            bumpum();
+            break;
+        case 4:
+            lightdark();
+            break;
+        case 5:
+            light();
+        case 6:
+            taptap();
+        }
+    rold = r;
+//delay(3000);
 }
 
 
@@ -49,7 +69,7 @@ void dimmers(){
 
 
 void boom(){
-    for (int j = 0; j < 10; j = j + 1){
+    for (int j = 0; j < 15; j = j + 1){
             dimmer.setPower(99);
             delay(60);
             dimmer.setPower(20);
@@ -70,9 +90,9 @@ void taptap(){
     for (int j = 0; j < 11; j = j + 1){
         int x = 1;
         for (int i = 15; i > 14; i = i + x){
-            dimmer.setPower(i - j*8);
+            dimmer.setPower(i - j*7);
             if (i == 49) x = -1;
-            delay(1);
+            delay(5);
             //delay(20 - 2 * j);
             }
         }
